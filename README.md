@@ -2,7 +2,7 @@
 
 This is the Light Field toolbox used for lenslet RAW data demultiplexing in [1].
 For more details see [our webpage](https://v-sense.scss.tcd.ie/research/light-fields/a-pipeline-for-lenslet-light-field-quality-enhancement/).
-Other Post processing steps presented in [1] (denoising and colour correction) are not present in this toolbox.
+The additional post-processing steps presented in [1] (colour correction for view consistency and denoising) are not present in this toolbox.
 
 This code is built upon the [Light Field toolbox v0.4-CLIM](https://www.irisa.fr/temics/demos/lightField/CLIM/DataSoftware.html), itself based on the [Light Field toolbox v0.4](https://uk.mathworks.com/matlabcentral/fileexchange/49683-light-field-toolbox-v0-4) by Donald Dansereau [2].
 
@@ -90,8 +90,6 @@ Usage is similar to the Light field toolbox v0.4 with additional/modified Decode
 
 - .WhiteProcDataFnameExtension = '.grid.json' (default, as in LF toolbox v0.4) / '.grid2.json' (use lensletGridModels computed from mlaCalibration)
 	- option defined in LFLytroDecodeImage.m
-
-(The results in [1] were generated using DecodeOptions.OptionalTasks='ColourCorrect'. For the other options, default values were used)
 
 
 ## References
