@@ -2,7 +2,7 @@
 
 This is the Light Field toolbox used for lenslet RAW data demultiplexing in [1].
 For more details see [our webpage](https://v-sense.scss.tcd.ie/research/light-fields/a-pipeline-for-lenslet-light-field-quality-enhancement/).
-The additional post-processing steps presented in [1] (colour correction for view consistency and denoising) are not present in this toolbox.
+The additional post-processing steps presented in [1] (recolouring for view consistency and denoising) are not present in this toolbox but are available as separate tools: [Recolouring](https://github.com/V-Sense/LFToolbox_Recolouring_HPR), [Denoising](https://github.com/V-Sense/LFBM5D).
 
 This code is built upon the [Light Field toolbox v0.4-CLIM](https://www.irisa.fr/temics/demos/lightField/CLIM/DataSoftware.html), itself based on the [Light Field toolbox v0.4](https://uk.mathworks.com/matlabcentral/fileexchange/49683-light-field-toolbox-v0-4) by Donald Dansereau [2].
 
