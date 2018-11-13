@@ -6,6 +6,8 @@ The additional post-processing steps presented in [1] (recolouring for view cons
 
 This code is built upon the [Light Field toolbox v0.4-CLIM](https://www.irisa.fr/temics/demos/lightField/CLIM/DataSoftware.html), itself based on the [Light Field toolbox v0.4](https://uk.mathworks.com/matlabcentral/fileexchange/49683-light-field-toolbox-v0-4) by Donald Dansereau [2].
 
+When using this code in your research, please cite the papers [1] and [3].
+
 ## Modifications from Light Field toolbox v0.4-CLIM:
 
 - Corrected white balance and exposure as detailed in [1] (M. LE PENDU)
