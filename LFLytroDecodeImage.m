@@ -140,6 +140,7 @@ fprintf('Zoom:\t%d\t\t%d\n', DecodeOptions.WhiteImageInfo.ZoomStep, DesiredCam.Z
 fprintf('Focus:\t%d\t\t%d\n\n', DecodeOptions.WhiteImageInfo.FocusStep, DesiredCam.FocusStep);
 
 %---Load white image, white image metadata, and lenslet grid parameters---
+DecodeOptions.WhiteImageInfo.Fname = strrep(DecodeOptions.WhiteImageInfo.Fname, '\', '/'); % FIX FOR LINUX
 WhiteMetadataFname = fullfile(PathToDatabase, DecodeOptions.WhiteImageInfo.Fname);
 WhiteProcFname = LFFindLytroPartnerFile(WhiteMetadataFname, DecodeOptions.WhiteProcDataFnameExtension);
 WhiteRawFname = LFFindLytroPartnerFile(WhiteMetadataFname, DecodeOptions.WhiteRawDataFnameExtension);

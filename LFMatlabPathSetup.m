@@ -14,4 +14,7 @@ fprintf('Adding paths for LF Toolbox ');
 addpath( fullfile(LFToolboxPath) );
 addpath( fullfile(LFToolboxPath, 'SupportFunctions') );
 addpath( fullfile(LFToolboxPath, 'SupportFunctions', 'CameraCal') );
+addpath( fullfile(LFToolboxPath, 'CLIM') );
+addpath( fullfile(LFToolboxPath, 'CLIM', 'LensletGuidedDemosaic') );
+addpath( fullfile(LFToolboxPath, 'CLIM', 'MLACalib') );
 fprintf('%s, done.\n', LFToolboxVersion);
