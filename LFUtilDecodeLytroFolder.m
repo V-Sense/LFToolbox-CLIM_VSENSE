@@ -91,8 +91,9 @@
 % *Options defined in LFDecodeLensletImageSimple :
 %                 .WeightedDemosaic : White image guided demosaicing (default = false).
 %                   .WeightedInterp : White image guided Interpolation (does not apply if ResampMethod='barycentric') (default = true).
-%                     .ResampMethod : 'fast' (default) / 'triangulation' / 'barycentric' (slower but generates higher resolution images).
-%
+%                     .ResampMethod : 'fast' (default) / 'triangulation' / 'barycentric' (slower but generates higher resolution images) / 
+%                                     'none': No interpolation -> generate many incomplete views with mask indicating missing pixels for later completion).
+%									  '4DKernelReg': 4D kernel regression interpolation method (Performs demosaicing and resampling interpolations simultaneously).
 %     RectOptions : struct controlling the optional rectification process
 %         .CalibrationDatabaseFname : Full path to the calibration file database, as created by
 %                                     LFUtilProcessCalibrations;
@@ -207,7 +208,7 @@ for( iFile = 1:length(FileList) )
     
     %---Decode---
     fprintf('Decoding...\n');
-    
+    tic;
     % First check if a decoded file already exists
     [SDecoded, FileExists, CompletedTasks, TasksRemaining, SaveFname] = CheckIfExists( ...
         LFFnameBase, DecodeOptions, FileOptions.SaveFnamePattern, FileOptions.ForceRedo );
@@ -230,6 +231,9 @@ for( iFile = 1:length(FileList) )
             SDecoded, 'LF', 'LFMetadata', 'WhiteImageMetadata', 'LensletGridModel', 'DecodeOptions' );
         clear SDecoded
     end
+    
+    DecodeOptions.TimeDecode = toc;
+    tic;
     
     %---Display thumbnail---
     Thumb = DispThumb(LF, CurFname, CompletedTasks);
@@ -267,6 +271,8 @@ for( iFile = 1:length(FileList) )
     end
     
     DecodeOptions.OptionalTasks = CompletedTasks;
+    
+    DecodeOptions.TimeRemaining = toc;
     
     %---Optionally save---
     if( SaveRequired && FileOptions.SaveResult )
@@ -357,12 +363,18 @@ LFWeight = LF(:,:,:,:,DecodeOptions.NColChans+1:DecodeOptions.NColChans+DecodeOp
 LF = LF(:,:,:,:,1:DecodeOptions.NColChans);
 
 %---Apply the color conversion and saturate---
-if(DecodeOptions.EarlyWhiteBalance)
-    %White Balance is already performed:
-    LF = LFColourCorrect( LF, DecodeOptions.ColourMatrix, [1 1 1], DecodeOptions.ExposureBias, DecodeOptions.Gamma, DecodeOptions.DoAWB, DecodeOptions.noClip );
+if(isfield(DecodeOptions,'ResampMethod') && strcmp(DecodeOptions.ResampMethod,'none'))
+    ColMatrix = eye(3); %Skip colour transform to avoid mixing RGB data since at most one component per pixel is reliable.
 else
-    LF = LFColourCorrect( LF, DecodeOptions.ColourMatrix, DecodeOptions.ColourBalance, DecodeOptions.ExposureBias, DecodeOptions.Gamma, DecodeOptions.DoAWB, DecodeOptions.noClip );
+    ColMatrix = DecodeOptions.ColourMatrix;
 end
+if(DecodeOptions.EarlyWhiteBalance)
+    ColBalance = [1 1 1]; %White Balance is already performed:
+else
+    ColBalance = DecodeOptions.ColourBalance;
+end
+
+LF = LFColourCorrect( LF, ColMatrix, ColBalance, DecodeOptions.ExposureBias, DecodeOptions.Gamma, DecodeOptions.DoAWB, DecodeOptions.noClip );
 
 
 %---Put the weight channel back---
