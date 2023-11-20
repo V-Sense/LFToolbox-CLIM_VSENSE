@@ -217,7 +217,7 @@ if(DecodeOptions.HotPixelCorrect)
     [ImagesDir, BlackImagesNames] = LFSearchBlackImages(WhiteRawFname,[0 1]);
     BlackImageSum = 0;
     for i=1:length(BlackImagesNames)
-        BlackImageSum = BlackImageSum + double(LFReadRaw( [ImagesDir '\' BlackImagesNames{i}], BitPacking ));
+        BlackImageSum = BlackImageSum + double(LFReadRaw( [ImagesDir, filesep, BlackImagesNames{i}], BitPacking ));
     end
 
     %---Compute Hot pixels---

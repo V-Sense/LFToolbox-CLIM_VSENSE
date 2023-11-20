@@ -244,7 +244,7 @@ fnames = dir(WhiteImagesPath);
 for i = 1:length(fnames)
     nm = fnames(i).name;
     if fnames(i).isdir && ~strcmp(nm,'.') && ~strcmp(nm,'..')
-        ComputeLytroGrids([WhiteImagesPath '\' nm '\WhiteImages'],FileOptions.WhiteMetadataFilenamePattern);
+        ComputeLytroGrids([WhiteImagesPath, filesep, nm, filesep, 'WhiteImages'],FileOptions.WhiteMetadataFilenamePattern);
     end
 end
 
